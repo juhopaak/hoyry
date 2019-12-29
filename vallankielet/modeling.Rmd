@@ -1,0 +1,41 @@
+---
+title: "Topicmodel-runous"
+output: html_notebook
+---
+
+```{r}
+library(topicmodels)
+```
+
+```{r}
+dataset <- "eduskunta"
+text_dir <- "clean"
+```
+
+
+```{r}
+load(paste("dtm/",dataset,"_",text_dir,"_dtm_nostop.rdata", sep="")) 
+```
+
+```{r}
+burnin = 1000
+iter = 1000
+keep = 50
+seed = 100
+```
+
+```{r}
+for (k in seq(10,50, by=10)) {
+  model <- LDA( dtm, k=k, method="Gibbs", control=list(seed=seed, burnin = burnin, iter = iter, keep = keep) )
+  
+  save(model, file=paste("models/",dataset,"_",text_dir,"_k",k,"_nostop.rda", sep=""))
+}
+```
+
+```{r}
+for (k in seq(10,50,by=10)) {
+  load(paste("models/",dataset,"_",text_dir,"_k",k,"_nostop.rda", sep=""))
+  write.csv(terms(model, 50), file=paste("csv/",dataset,"_",text_dir,"_k",k,"_nostop.csv", sep=""))
+}
+```
+
