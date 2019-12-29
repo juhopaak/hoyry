@@ -4,3 +4,4 @@ models/*
 texts/*
 topicmodel/*
 viz/*
+.ipynb_checkpoints
