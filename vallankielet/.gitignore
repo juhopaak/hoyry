@@ -2,3 +2,5 @@ csv/*
 dtm/*
 models/*
 texts/*
+topicmodel/*
+viz/*
